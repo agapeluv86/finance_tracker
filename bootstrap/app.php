@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'userisblocked' => UserIsBlocked::class, 
             'admin' => AdminMiddleware::class, 
             'ensureuserrole' => EnsureUserRole::class, 
-            'verified' => EnsureEmailIsVerified::class,
+            //'verified' => EnsureEmailIsVerified::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
