@@ -21,12 +21,21 @@ Route::view('/income-tracking', 'income-tracking')->name('income-tracking');
 Route::view('/expense-tracking', 'expense-tracking')->name('expense-tracking');
 Route::view('/security', 'security')->name('security');
 
+Route::post('/accept-cookies', function (Request $request) {
+    Cookie::queue('cookie_consent', 'accepted', 525600); 
+    return response()->json(['message' => 'Cookies accepted']);
+})->name('cookie.accept');
 
-// User Dashboard - Prevent Admins from Accessing
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy.policy');
+
+
+
+
 Route::middleware(['auth', 'verified', 'userisblocked', 'ensureuserrole'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
- // Income 
     Route::prefix('income')->name('income.')->group(function () {
         Route::get('/', [IncomeController::class, 'index'])->name('index');
         Route::get('/create', [IncomeController::class, 'create'])->name('create');
@@ -38,7 +47,7 @@ Route::middleware(['auth', 'verified', 'userisblocked', 'ensureuserrole'])->grou
 
     });
 
-    // Expense 
+    
     Route::prefix('expense')->name('expense.')->group(function () {
         Route::get('/', [ExpenseController::class, 'index'])->name('index');
         Route::get('/create', [ExpenseController::class, 'create'])->name('create');
@@ -49,7 +58,7 @@ Route::middleware(['auth', 'verified', 'userisblocked', 'ensureuserrole'])->grou
         Route::delete('/{expense_id}', [ExpenseController::class, 'destroy'])->name('destroy');
     });
 
-    // Savings 
+    
     Route::prefix('savings')->name('savings.')->group(function () {
         Route::get('/', [SavingsGoalController::class, 'index'])->name('index');
         Route::get('/create', [SavingsGoalController::class, 'create'])->name('create');
@@ -61,20 +70,20 @@ Route::middleware(['auth', 'verified', 'userisblocked', 'ensureuserrole'])->grou
 });
 
 
-// Admin Routes (Requires Authentication)
+
 Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/users', [AdminController::class, 'users'])->name('users'); // Manage Users
     Route::post('/promote/{userId}', [AdminController::class, 'promote'])->name('promote');
     
 
-    // Admin Routes (Require Admin Role)
+    
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/income', [AdminController::class, 'income'])->name('income');
         Route::get('/expense', [AdminController::class, 'expense'])->name('expense');
         Route::get('/savings', [SavingsGoalController::class, 'adminIndex'])->name('savings');
 
-        // Income Categories Management
+       
         Route::prefix('income_categories')->name('income_categories.')->group(function () {
             Route::get('/', [IncomeCategoryController::class, 'index'])->name('index');
             Route::get('/create', [IncomeCategoryController::class, 'create'])->name('create');
@@ -84,7 +93,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
             Route::put('/status/{category_id}', [IncomeCategoryController::class, 'status'])->name('status');
         });
 
-        // Expense Categories Management
+        
         Route::prefix('expense_categories')->name('expense_categories.')->group(function () {
             Route::get('/', [ExpenseCategoryController::class, 'index'])->name('index');
             Route::get('/create', [ExpenseCategoryController::class, 'create'])->name('create');
@@ -95,7 +104,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
         });
     });
 
-    // Logout Route
+    
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 });
 

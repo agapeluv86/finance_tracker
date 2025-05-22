@@ -1,3 +1,3 @@
-<footer class="bg-info text-white text-center p-2">
-    <p>&copy; {{ date('Y') }} Agape Nigeria Limited. All rights reserved.</p>
-</footer>
+<footer class="footer bg-light text-center py-3 mt-auto">
+        &copy; <span id="year"></span> Finance Tracker. All rights reserved.
+    </footer>

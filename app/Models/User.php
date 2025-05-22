@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\CustomVerifyEmail;
+use App\Notifications\CustomResetPasswordNotification;
 
 class User extends Authenticatable
 {
@@ -44,10 +45,12 @@ class User extends Authenticatable
 
     
 
-// public function sendEmailVerificationNotification()
-// {
-//     $this->notify(new CustomVerifyEmail());
-// }
+   public function sendPasswordResetNotification($token)
+    {
+
+    $this->notify(new CustomResetPasswordNotification($token));
+    
+    }
 
 
     public function expenses()

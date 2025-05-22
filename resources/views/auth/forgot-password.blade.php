@@ -11,7 +11,7 @@
                             Enter your email below to receive a password reset link.
                         </p>
 
-                        <!-- Session Status -->
+                       
                         @if (session('status'))
                             <div class="alert alert-success text-center">
                                 {{ session('status') }}
@@ -21,7 +21,7 @@
                         <form method="POST" action="{{ route('password.email') }}">
                             @csrf
 
-                            <!-- Email Address -->
+                            
                             <div class="mb-3">
                                 <label for="email" class="form-label fw-semibold">Email Address</label>
                                 <input type="email" name="email" id="email" class="form-control border-primary" value="{{ old('email') }}" required autofocus>

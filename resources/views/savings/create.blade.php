@@ -3,7 +3,7 @@
 @section('pagecontent')
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8 col-sm-12">
+       <div class="col-lg-5 col-md-6 col-sm-12"> 
             
             @if (session('good_msg'))
                 <div class="alert alert-success">
@@ -12,7 +12,7 @@
             @endif
 
             <div class="card shadow-sm">
-                <div class="card-header bg-info text-white text-center">
+                <div class="card-header bg-primary text-white text-center">
                     <h3>Savings</h3>
                 </div>
                 <div class="card-body">
@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-success">Add Savings</button>
+                            <button type="submit" class="btn btn-primary">Add Savings</button>
                         </div>
 
                     </form>
